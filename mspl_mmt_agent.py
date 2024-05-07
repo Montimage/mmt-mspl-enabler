@@ -1,6 +1,6 @@
 __author__ = "Gustavo Jodar Soares"
 __copyright__ = "Copyright 2023, CERBERUS"
-__credits__ = ["Antonio Skarmeta", "Alejandro Molina Zarca","Gustavo jodar Soares","Huu-Nghia Nguyen" "Juan Francisco Martínez Gil", "Emilio García de la Calera Molina"]
+__credits__ = ["Antonio Skarmeta", "Alejandro Molina Zarca","Gustavo jodar Soares","Huu-Nghia Nguyen", "Juan Francisco Martínez Gil", "Emilio García de la Calera Molina"]
 __license__ = "GPL"
 __version__ = "0.0.1"
 __maintainer__ = "Gustavo Jodar Soares"
@@ -11,6 +11,7 @@ import xml.etree.ElementTree as ET
 import sys
 
 MMT_PROBE_CONF_PATH = "mmt-probe.conf"
+NEW_RULE_NAME = ""
 
 #Class that reads the .xml file from the MSPL and gets the relavant data for mmt-security
 class Mspl:
@@ -99,8 +100,30 @@ class ConfigAdapter:
         with open("new-mmt--probe.conf", 'w') as f:
             f.writelines(lines)
 
+class RuleMaker:
 
+    def create_rule(self, rules):
 
+        #about ping_of_the_death
+        if(rules[0]["packetFilterCondition"]["protocol_type"] == '1' and rules[0]["packetFilterCondition"]["size"][0] == '>'):
+
+            changes = ["2" , f"((ip.src != ip.dst)&amp;&amp;(meta.packet_len &gt; {rules[0]['packetFilterCondition']['size'][1:]} ))"]
+            
+            # Loading rule
+            rule_source_object = ET.parse("rules/51.ping_of_death.xml")
+            root = rule_source_object.getroot()
+            property_element = root.find(".//property")
+
+            # Finding the event element with the specified ID
+            event_element = property_element.find(f"./event[@event_id='{changes[0]}']")
+
+            # Changing size of packet to alert
+            event_element.set("boolean_expression", changes[1])
+
+            # Write the modified XML as a new rule
+            rule_source_object.write("rules/new_rule.xml")
+
+            
 if __name__ == "__main__":
     xml_file = sys.argv[1] 
     
@@ -109,14 +132,16 @@ if __name__ == "__main__":
     xml_source = open(xml_file).read()
 
     msplHelper = Mspl()
+    configAdapter = ConfigAdapter()
+    ruleMaker = RuleMaker()
 
     rules = msplHelper.getConfig(xml_source)
 
-    configAdapter = ConfigAdapter()
+    ruleMaker.create_rule(rules)
 
     # Example usage:
     config_changes = {
-        'rules-mask': "\"114\"",
-    }
+        'rules-mask': "\"(1:114)\""
+    }   
 
     configAdapter.modify_config_file('mmt-probe.conf', config_changes)

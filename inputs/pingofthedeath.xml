@@ -1,0 +1,41 @@
+<?xml version='1.0' encoding='UTF-8' standalone='yes'?>
+<ITResourceOrchestration id="omspl_46bdc9a9035540d4b257bd686a7e6bc5" 
+        xmlns="http://modeliosoft/xsddesigner/a22bd60b-ee3d-425c-8618-beb6a854051a/ITResource.xsd"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://modeliosoft/xsddesigner/a22bd60b-ee3d-425c-8618-beb6a854051a/ITResource.xsd mspl.xsd">
+    <ITResource id="mspl_47bdc9a9035540d4b257bd686a7e6c54" orchestrationID="omspl_47bdc9a9035540d4b257bd686a7e6bc5">
+        <configuration xsi:type='RuleSetConfiguration'>
+        <capability>
+                <Name>Network_traffic_analysis</Name>
+            </capability>
+            <configurationRule>
+                <configurationRuleAction xsi:type='MonitoringAction' >
+                    <monitoringActionType>ALERT</monitoringActionType>
+                </configurationRuleAction>
+                <configurationCondition xsi:type='MonitoringConfigurationConditions'>
+                    <isCNF>false</isCNF>
+                    <monitoringConfigurationCondition>
+                        <isCNF>false</isCNF>
+                        <packetFilterCondition>
+                            <Size>>1500</Size>
+                            <ProtocolType>1</ProtocolType>
+                            <DestinationAddress>8.8.8.8</DestinationAddress>
+                        </packetFilterCondition>
+                        <ICMPCondition>
+	                    <Type>8</Type>
+			 </ICMPCondition>
+                    </monitoringConfigurationCondition>
+                </configurationCondition>
+                <Description>Possible large ping attempt Ping of Death</Description>
+                <Name>Rule0</Name>
+                <isCNF>false</isCNF>
+            </configurationRule>
+            <Name>Conf1</Name>
+        </configuration>
+        <priority>1000</priority>
+        <enablerCandidates>
+            <enabler>snort_agent</enabler>
+        </enablerCandidates>
+    </ITResource>
+</ITResourceOrchestration>
+
