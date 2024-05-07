@@ -11,7 +11,7 @@ import xml.etree.ElementTree as ET
 import sys
 
 MMT_PROBE_CONF_PATH = "mmt-probe.conf"
-NEW_RULE_NAME = ""
+NEW_RULE_NAME = "114"
 
 #Class that reads the .xml file from the MSPL and gets the relavant data for mmt-security
 class Mspl:
@@ -94,11 +94,11 @@ class ConfigAdapter:
                 if key in lines[i]:
                     #Modify the value
                     lines[i] = f"    {key}    = {config_changes[key]}\n"
-                    print("Aplying change -> ", lines[i])
                     break
             
         with open("new-mmt--probe.conf", 'w') as f:
             f.writelines(lines)
+        print("  -> New mmt-probe.conf file created...")
 
 class RuleMaker:
 
@@ -107,8 +107,8 @@ class RuleMaker:
         #about ping_of_the_death
         if(rules[0]["packetFilterCondition"]["protocol_type"] == '1' and rules[0]["packetFilterCondition"]["size"][0] == '>'):
 
-            changes = ["2" , f"((ip.src != ip.dst)&amp;&amp;(meta.packet_len &gt; {rules[0]['packetFilterCondition']['size'][1:]} ))"]
-            
+            changes = ["2" , f"((ip.src != ip.dst) && (meta.packet_len >  {rules[0]['packetFilterCondition']['size'][1:]}))"]
+                             
             # Loading rule
             rule_source_object = ET.parse("rules/51.ping_of_death.xml")
             root = rule_source_object.getroot()
@@ -127,7 +127,7 @@ class RuleMaker:
 if __name__ == "__main__":
     xml_file = sys.argv[1] 
     
-    print("Reading mspl file...")
+    print("  -> Reading mspl file...")
     
     xml_source = open(xml_file).read()
 
@@ -137,6 +137,7 @@ if __name__ == "__main__":
 
     rules = msplHelper.getConfig(xml_source)
 
+    print(f"  -> Obtained info: {rules}")
     ruleMaker.create_rule(rules)
 
     # Example usage:
