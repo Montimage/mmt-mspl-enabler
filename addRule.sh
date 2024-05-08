@@ -11,7 +11,7 @@ PURPL='\033[0;35m'
 NC='\033[0m'
 
 echo -e "\n${PURPL}Running the script with the provided XML file...${NC}"
-python3 mspl_mmt_agent.py pingofthedeath.xml
+python3 mspl_mmt_agent.py inputs/pingofthedeath.xml
 
 echo -e "\n${PURPL}Copying the new mmt-probe.conf file to the Docker container [Using only the new rule]...${NC}"
 sudo docker cp new-mmt--probe.conf mi_probe:/opt/mmt/probe/mmt-probe.conf
