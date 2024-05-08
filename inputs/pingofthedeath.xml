@@ -17,7 +17,7 @@
                     <monitoringConfigurationCondition>
                         <isCNF>false</isCNF>
                         <packetFilterCondition>
-                            <Size>>1500</Size>
+                            <Size>>200</Size>
                             <ProtocolType>1</ProtocolType>
                             <DestinationAddress>8.8.8.8</DestinationAddress>
                         </packetFilterCondition>

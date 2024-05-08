@@ -20,7 +20,7 @@ echo -e "\n${PURPL}Copying the new rule XML file to the Docker container...${NC}
 sudo docker cp rules/new_rule.xml mi_probe:/opt/mmt/security/bin
 
 echo -e "\n${PURPL}Compiling the new rule and generating the shared object file...${NC}"
-sudo docker exec -it mi_probe ./opt/mmt/security/bin/compile_rule /opt/mmt/security/rules/104.new.so /opt/mmt/security/bin/new_rule.xml
+sudo docker exec -it mi_probe ./opt/mmt/security/bin/compile_rule /opt/mmt/security/rules/114.new.so /opt/mmt/security/bin/new_rule.xml
 
 echo -e "\n${PURPL}Restarting the MMT probe Docker container...${NC}"
 sudo docker restart mi_probe
