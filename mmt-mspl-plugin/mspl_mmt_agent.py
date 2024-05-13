@@ -11,7 +11,7 @@ import xml.etree.ElementTree as ET
 import sys
 
 MMT_PROBE_CONF_PATH = "mmt-probe.conf"
-NEW_RULE_NAME = "114"
+NEW_RULE_NUMBER = "114"
 
 #Class that reads the .xml file from the MSPL and gets the relavant data for mmt-security
 class Mspl:
@@ -113,6 +113,7 @@ class RuleMaker:
             rule_source_object = ET.parse("rules/51.ping_of_death.xml")
             root = rule_source_object.getroot()
             property_element = root.find(".//property")
+            property_element.set("description", "Ping of death attack - size > " + rules[0]['packetFilterCondition']['size'][1:])
 
             # Finding the event element with the specified ID
             event_element = property_element.find(f"./event[@event_id='{changes[0]}']")
@@ -128,7 +129,6 @@ if __name__ == "__main__":
     xml_file = sys.argv[1] 
     
     print("  -> Reading mspl file...")
-    
     xml_source = open(xml_file).read()
 
     msplHelper = Mspl()
@@ -142,7 +142,7 @@ if __name__ == "__main__":
 
     # Example usage:
     config_changes = {
-        'rules-mask': "\"(1:114)\""
+        'rules-mask': f"\"(1:{NEW_RULE_NUMBER})\""
     }   
 
     configAdapter.modify_config_file('mmt-probe.conf', config_changes)
