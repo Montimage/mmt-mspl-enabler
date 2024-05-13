@@ -1,0 +1,102 @@
+{
+  "definition": {
+    "swagger": "2.0",
+    "servers": [
+      {
+        "description": "API to connect Orchestrator with MMT Tools",
+        "url": "http://10.208.9.108:3000"
+      }
+    ],
+    "info": {
+      "description": "API to connect Orchestrator with MMT Tools",
+      "version": "1.0.0",
+      "title": "MMT-MSPL-Driver"
+    },
+    "tags": [
+      {
+        "name":"MMT-Dockers Starter",
+        "description":"Operations to start MMT-Tools"
+      },
+      {
+        "name": "XML-Rule Sender",
+        "description": "Operations to set new rules to MMT-Probe"
+      },
+      {
+        "name": "MMT-Config Changer",
+        "description": "Operations to set new configuration to MMT-Probe"
+      },
+      {
+        "name": "MMT-Docker mi_probe Restarter",
+        "description": "Operations to restart MMT-Probe (mi_probe container)"
+      }
+    ],
+    "paths": {
+      "/start-mmt-tools": {
+        "get": {
+          "description": "Start MMT-Tools containers",
+          "tags": ["MMT-Dockers Starter"],
+          "responses": {
+            "200": {
+              "description": "Containers Started"
+            }
+          }
+        }
+      },
+      "/xml-rule": {
+        "put": {
+          "description": "Upload a new XML rule",
+          "tags": ["XML-Rule Sender"],
+          "consumes": "multipart/form-data",
+          "parameters": [
+            {
+              "in": "formData",
+              "name": "file",
+              "type": "file",
+              "description": "XML rule file to be incorporated in MMT-Security",
+              "required": true
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "New XML-Rule incorporated in MMT-Security"
+            }
+          }
+        }
+      },
+      "/mmt-config": {
+        "put": {
+          "description": "Upload a configuration file to MMT-Probe",
+          "tags": ["MMT-Config Changer"],
+          "consumes": "multipart/form-data",
+          "parameters": [
+            {
+              "in": "formData",
+              "name": "file",
+              "type": "file",
+              "description": "mmt-probe.conf file to be incorporated in MMT-Probe",
+              "required": true
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "New configuration file incorporated in MMT-Probe"
+            }
+          }
+        }
+      },
+      "/restart-docker": {
+        "get": {
+          "description": "Restart MMT-Tools containers",
+          "tags": ["MMT-Docker mi_probe Restarter"],
+          "responses": {
+            "200": {
+              "description": "mi_probe container restarted"
+            }
+          }
+        }
+      }
+    }
+  },
+  "apis": ["./routes/*.js"]
+}
+
