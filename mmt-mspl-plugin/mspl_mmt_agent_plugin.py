@@ -10,7 +10,7 @@ __status__ = "Development"
 import xml.etree.ElementTree as ET
 import sys
 
-MMT_PROBE_CONF_PATH = "mmt-probe.conf"
+MMT_PROBE_CONF_PATH = "mmt-confs/"
 NEW_RULE_NUMBER = "114"
 
 #Class that reads the .xml file from the MSPL and gets the relavant data for mmt-security
@@ -86,7 +86,7 @@ class Mspl:
 class ConfigAdapter:
 
     def modify_config_file(self, file_path, config_changes):
-        with open(MMT_PROBE_CONF_PATH, 'r') as f:
+        with open(MMT_PROBE_CONF_PATH + "mmt-probe.conf", 'r') as f:
             lines = f.readlines()
 
         for key in config_changes.keys():
@@ -96,7 +96,7 @@ class ConfigAdapter:
                     lines[i] = f"    {key}    = {config_changes[key]}\n"
                     break
             
-        with open("new-mmt--probe.conf", 'w') as f:
+        with open(MMT_PROBE_CONF_PATH + "new-mmt--probe.conf", 'w') as f:
             f.writelines(lines)
         print("  -> New mmt-probe.conf file created...")
 
