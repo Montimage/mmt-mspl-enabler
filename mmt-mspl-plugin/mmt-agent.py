@@ -1,5 +1,6 @@
 import subprocess
 import requests
+import sys
 
 # IP address
 IP_ADDRESS = '10.208.9.108'
@@ -28,8 +29,10 @@ def make_api_request(method, endpoint, headers=None, files=None):
         return str(e)
 
 if __name__ == "__main__":
+    xml_file = sys.argv[1] 
+
     # Execute commands
-    plugin_output = execute_command("python3 mspl_mmt_plugin.py inputs/pingofthedeath.xml")
+    plugin_output = execute_command("python3 mspl_mmt_agent_plugin.py " + xml_file)
     print("\n-> Plugin Output:", plugin_output)
 
     # Upload XML file
