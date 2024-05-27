@@ -1,0 +1,53 @@
+<?xml version='1.0' encoding='UTF-8' standalone='yes'?>
+<ITResourceOrchestration id=omspl_46bdc9a9035540d4b257bd686a7e6bc5 
+        xmlns=http://modeliosoft/xsddesigner/a22bd60b-ee3d-425c-8618-beb6a854051a/ITResource.xsd
+        xmlns:xsi=http://www.w3.org/2001/XMLSchema-instance
+        xsi:schemaLocation=http://modeliosoft/xsddesigner/a22bd60b-ee3d-425c-8618-beb6a854051a/ITResource.xsd mspl.xsd>
+    <ITResource id=mspl_47bdc9a9035540d4b257bd686a7e6c54 orchestrationID=omspl_47bdc9a9035540d4b257bd686a7e6bc5>
+        <configuration xsi:type='RuleSetConfiguration'>
+            <capability>
+                <Name>Network_traffic_analysis</Name>
+            </capability>
+            <configurationRule>
+                <configurationRuleAction xsi:type='MonitoringAction' >
+                    <monitoringActionType>ALERT</monitoringActionType>
+                    <DetectionRule>
+                    	<id>100006</id> <!--> Esto es el SID de snort </!-->
+                    	<description>Posible Ataque NMAP Syn</description>
+                    	<revision>1</revision> <!-->Opcional</!-->
+                    	<Correlation> <!-->Opcional</!-->
+                    	    <type>both</type>
+                    	    <track>by_src</track>
+                    	    <count>1000</count>
+                    	    <seconds>10</seconds>
+                    	</Correlation>
+                    </DetectionRule>
+                </configurationRuleAction>
+                <configurationCondition xsi:type='MonitoringConfigurationConditions'>
+                    <isCNF>false</isCNF>
+                    <monitoringConfigurationCondition>
+                        <isCNF>false</isCNF>
+                        <packetFilterCondition>
+                            <SourceAddress>any</SourceAddress>
+                            <DestinationAddress>any</DestinationAddress>
+                            <SourcePort>any</SourcePort> <!-->Opcional</!-->
+                            <DestinationPort>any</DestinationPort> <!-->Opcional</!-->
+                            <ProtocolType>tcp</ProtocolType>
+                            <TCPCondition> <!-->Opcional</!-->
+                            	<SYNFlag>true</SYNFlag>
+                            <TCPCondition>
+                        </packetFilterCondition>
+                    </monitoringConfigurationCondition>
+                </configurationCondition>
+                <Name>SnortRule_1000006</Name>
+                <isCNF>false</isCNF>
+            </configurationRule>
+            <Name>Conf_1000006</Name>
+        </configuration>
+        <priority>1000</priority>
+        <enablerCandidates>
+            <enabler>snort_agent</enabler>
+        </enablerCandidates>
+    </ITResource>
+</ITResourceOrchestration>
+

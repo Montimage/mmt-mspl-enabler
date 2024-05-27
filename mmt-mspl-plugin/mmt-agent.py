@@ -29,7 +29,7 @@ def make_api_request(method, endpoint, headers=None, files=None):
 
 if __name__ == "__main__":
     # Execute commands
-    plugin_output = execute_command("python3 mspl_mmt_agent_plugin.py inputs/pingofthedeath.xml")
+    plugin_output = execute_command("python3 mspl_mmt_plugin.py inputs/pingofthedeath.xml")
     print("\n-> Plugin Output:", plugin_output)
 
     # Upload XML file
