@@ -135,9 +135,11 @@ class RuleMaker:
             #about nmap snyc 
             elif packet_filter_condition["protocol_type"].lower() == 'tcp' and packet_filter_condition.get("syn_flag", "").lower() == 'true':
                 # Loading rule
-                rule_source_object = ET.parse("rules/51.ping_of_death.xml")
+                rule_source_object = ET.parse("rules/40.TCP_SYN_scan.xml")
                 # Write the modified XML as a new rule
                 rule_source_object.write("rules/new_rule.xml")
+
+            
                 
 
             
