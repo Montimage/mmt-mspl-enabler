@@ -30,6 +30,11 @@ class Mspl:
             payload = packet_filter_condition.find(".//{%s}Payload" % namespace)
             size = packet_filter_condition.find(".//{%s}Size" % namespace)
             direction = packet_filter_condition.find(".//{%s}direction" % namespace)
+            tcp_condition = packet_filter_condition.find(".//{%s}TCPCondition" % namespace)
+            syn_flag = None
+            if tcp_condition is not None:
+                syn_flag = tcp_condition.find(".//{%s}SYNFlag" % namespace)
+
 
         rule_content_aux = {"src_address": src_address.text if src_address is not None else None,
                         "dst_address": dst_address.text if dst_address is not None else None,
@@ -37,7 +42,8 @@ class Mspl:
                         "protocol_type": protocol_type.text if protocol_type is not None else None,
                         "payload": payload.text if payload is not None else None,
                         "size": size.text if size is not None else None,
-                        "direction": direction.text if direction is not None else None
+                        "direction": direction.text if direction is not None else None,
+                        "syn_flag": syn_flag.text if syn_flag is not None else None
                         }
         rule_content = {}
         for key in rule_content_aux:
@@ -104,25 +110,35 @@ class RuleMaker:
 
     def create_rule(self, rules):
 
-        #about ping_of_the_death
-        if(rules[0]["packetFilterCondition"]["protocol_type"] == '1' and rules[0]["packetFilterCondition"]["size"][0] == '>'):
+        for i, rule in enumerate(rules):
+            packet_filter_condition = rule["packetFilterCondition"]
+            #about ping_of_the_death
+            if packet_filter_condition["protocol_type"] == '1' and packet_filter_condition["size"][0] == '>':
 
-            changes = ["2" , f"((ip.src != ip.dst) && (meta.packet_len >  {rules[0]['packetFilterCondition']['size'][1:]}))"]
-                             
-            # Loading rule
-            rule_source_object = ET.parse("rules/51.ping_of_death.xml")
-            root = rule_source_object.getroot()
-            property_element = root.find(".//property")
-            property_element.set("description", "Ping of death attack - size > " + rules[0]['packetFilterCondition']['size'][1:])
+                changes = ["2" , f"((ip.src != ip.dst) && (meta.packet_len >  {rules[0]['packetFilterCondition']['size'][1:]}))"]
+                                
+                # Loading rule
+                rule_source_object = ET.parse("rules/51.ping_of_death.xml")
+                root = rule_source_object.getroot()
+                property_element = root.find(".//property")
+                property_element.set("description", "Ping of death attack - size > " + rules[0]['packetFilterCondition']['size'][1:])
 
-            # Finding the event element with the specified ID
-            event_element = property_element.find(f"./event[@event_id='{changes[0]}']")
+                # Finding the event element with the specified ID
+                event_element = property_element.find(f"./event[@event_id='{changes[0]}']")
 
-            # Changing size of packet to alert
-            event_element.set("boolean_expression", changes[1])
+                # Changing size of packet to alert
+                event_element.set("boolean_expression", changes[1])
 
-            # Write the modified XML as a new rule
-            rule_source_object.write("rules/new_rule.xml")
+                # Write the modified XML as a new rule
+                rule_source_object.write("rules/new_rule.xml")
+            
+            #about nmap snyc 
+            elif packet_filter_condition["protocol_type"].lower() == 'tcp' and packet_filter_condition.get("syn_flag", "").lower() == 'true':
+                # Loading rule
+                rule_source_object = ET.parse("rules/51.ping_of_death.xml")
+                # Write the modified XML as a new rule
+                rule_source_object.write("rules/new_rule.xml")
+                
 
             
 if __name__ == "__main__":
