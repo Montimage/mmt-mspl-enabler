@@ -32,7 +32,7 @@ if __name__ == "__main__":
     xml_file = sys.argv[1] 
 
     # Execute commands
-    plugin_output = execute_command("python3 mspl_mmt_agent_plugin.py " + xml_file)
+    plugin_output = execute_command("python3 mspl_mmt_plugin.py " + xml_file)
     print("\n-> Plugin Output:", plugin_output)
 
     # Upload XML file
