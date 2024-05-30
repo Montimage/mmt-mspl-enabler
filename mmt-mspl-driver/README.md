@@ -17,10 +17,10 @@ Install dependencies
   npm install
 ```
 
-Start the server
+Start the server (must be done with sudo)
 
 ```bash
-  node index.js
+  sudo node index.js
 ```
 
 # Requirements
