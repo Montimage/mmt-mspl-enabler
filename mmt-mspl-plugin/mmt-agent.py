@@ -3,7 +3,7 @@ import requests
 import sys
 
 # IP address
-IP_ADDRESS = '10.208.9.108'
+IP_ADDRESS = '10.208.1.24'
 PORT = 4000
 
 # Function to execute a command
