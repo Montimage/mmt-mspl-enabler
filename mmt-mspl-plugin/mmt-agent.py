@@ -28,8 +28,21 @@ def make_api_request(method, endpoint, headers=None, files=None):
     except requests.exceptions.RequestException as e:
         return str(e)
 
+
 if __name__ == "__main__":
     xml_file = sys.argv[1] 
+
+    try:
+        # Make a simple GET request
+        response = requests.get(f"http://{IP_ADDRESS}:{PORT}/healthcheck")  # Replace with appropriate endpoint if needed
+        
+        response.raise_for_status()  # Raise an exception for non-200 status codes
+        
+        print(f"IP address {IP_ADDRESS} is reachable on port {PORT}")
+    
+    except requests.exceptions.RequestException as e:
+        print(f"Error: Could not connect to {IP_ADDRESS}:{PORT}. {e} \n\nCheck if API is up!")
+        exit(1)
 
     # Execute commands
     plugin_output = execute_command("python3 mspl_mmt_plugin.py " + xml_file)
