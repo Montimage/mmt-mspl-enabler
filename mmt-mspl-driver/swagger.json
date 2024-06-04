@@ -14,6 +14,10 @@
     },
     "tags": [
       {
+        "name":"API Health Check",
+        "description":"Check if API is up"
+      },
+      {
         "name":"MMT-Dockers Starter",
         "description":"Operations to start MMT-Tools"
       },
@@ -31,6 +35,17 @@
       }
     ],
     "paths": {
+      "/healthcheck": {
+        "get": {
+          "description": "Check if API is up",
+          "tags": ["API Health Check"],
+          "responses": {
+            "200": {
+              "description": "API is up"
+            }
+          }
+        }
+      },
       "/start-mmt-tools": {
         "get": {
           "description": "Start MMT-Tools containers",

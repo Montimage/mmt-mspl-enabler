@@ -7,6 +7,7 @@ const startToolsRoutes = require('./routes/mmt-tools-starter');
 const xmlRuleRoutes = require('./routes/xml-rule'); 
 const mmtConfigRoutes = require('./routes/mmt-config');
 const restartRoutes = require('./routes/restart-mi-probe');
+const healthcheckRoutes = require('./routes/healthcheck');
 
 const swaggerFile = require('./swagger.json')
 
@@ -25,6 +26,8 @@ app.use('/xml-rule', xmlRuleRoutes);
 app.use('/mmt-config', mmtConfigRoutes); 
 
 app.use('/restart-docker', restartRoutes);
+
+app.use('/healthcheck', healthcheckRoutes);
 
 const PORT = process.env.PORT || 4000;
 app.listen(PORT, () => {
