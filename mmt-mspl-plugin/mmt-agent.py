@@ -2,6 +2,15 @@ import subprocess
 import requests
 import sys
 
+__author__ = "Gustavo Jodar Soares"
+__copyright__ = "Copyright 2023, CERBERUS"
+__credits__ = ["Antonio Skarmeta", "Alejandro Molina Zarca","Gustavo jodar Soares","Huu-Nghia Nguyen", "Emilio García de la Calera Molina"]
+__license__ = "GPL"
+__version__ = "0.0.1"
+__maintainer__ = "Gustavo Jodar Soares"
+__email__ = "gustavo.jodar@um.es"
+__status__ = "Development"
+
 # Define color escape codes
 GREEN = '\033[92m'
 PURPLE = '\033[95m'

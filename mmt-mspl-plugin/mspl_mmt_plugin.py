@@ -1,6 +1,6 @@
 __author__ = "Gustavo Jodar Soares"
 __copyright__ = "Copyright 2023, CERBERUS"
-__credits__ = ["Antonio Skarmeta", "Alejandro Molina Zarca","Gustavo jodar Soares","Huu-Nghia Nguyen", "Juan Francisco Martínez Gil", "Emilio García de la Calera Molina"]
+__credits__ = ["Antonio Skarmeta", "Alejandro Molina Zarca","Gustavo jodar Soares","Huu-Nghia Nguyen", "Emilio García de la Calera Molina"]
 __license__ = "GPL"
 __version__ = "0.0.1"
 __maintainer__ = "Gustavo Jodar Soares"
