@@ -11,8 +11,8 @@ router.get('/', function (req, res) {
             res.status(500).send('Error restarting Docker container');
             return;
         }
+        res.send('mi_probe docker restarted successfully! Changes applied.');
     });
-    res.send('mi_probe docker restarted successfully! Changes applied.');
 });
 
 

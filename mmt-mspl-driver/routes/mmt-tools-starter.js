@@ -3,7 +3,6 @@ const router = express.Router();
 const { exec } = require('child_process');
 
 router.get('/', function (req, res) {
-
     // Execute the command to copy the file using Docker
     exec(`sudo docker compose -f Docker-MMT-Tools/docker-compose.yml up`, (error, stdout, stderr) => {
         if (error) {
@@ -11,9 +10,10 @@ router.get('/', function (req, res) {
             res.status(500).send('Error starting Docker containers');
             return;
         }
-    });
-    res.send('MMT-Tools dockers started successfully!');
-});
 
+        // Send the response after the command has completed
+        res.send('MMT-Tools dockers started successfully!');
+    });
+});
 
 module.exports = router;

@@ -2,8 +2,14 @@ import subprocess
 import requests
 import sys
 
+# Define color escape codes
+GREEN = '\033[92m'
+PURPLE = '\033[95m'
+RESET = '\033[0m'
+RED = '\033[91m'
+
 # IP address
-IP_ADDRESS = '10.208.1.24'
+IP_ADDRESS = '10.208.6.56'
 PORT = 4000
 
 # Function to execute a command
@@ -11,10 +17,12 @@ def execute_command(command):
     try:
         result = subprocess.run(command, shell=True, check=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
         output = result.stdout.decode('utf-8')
+        print(f"{GREEN}{output}{RESET}\n")
         return output
     except subprocess.CalledProcessError as e:
         error_message = e.stderr.decode('utf-8')
-        return error_message
+        print(f"{RED}Error: {error_message}{RESET}")
+        sys.exit(1)
 
 # Function to make an API request
 def make_api_request(method, endpoint, headers=None, files=None):
@@ -22,42 +30,37 @@ def make_api_request(method, endpoint, headers=None, files=None):
     try:
         response = requests.request(method, url, headers=headers, files=files)
         if response.status_code == 200:
+            print(f"{GREEN}Success: {response.status_code}, {response.text}{RESET}\n")
             return response.json() if response.headers.get('content-type') == 'application/json' else response.text
         else:
-            return f'Error: {response.status_code}, {response.text}'
+            print(f"{RED}Error: {response.status_code}, {response.text}{RESET}")
+            sys.exit(1)
     except requests.exceptions.RequestException as e:
-        return str(e)
-
+        print(f"{RED}Request Exception: {str(e)}{RESET}")
+        sys.exit(1)
 
 if __name__ == "__main__":
-    xml_file = sys.argv[1] 
+    xml_file = sys.argv[1]
 
-    try:
-        # Make a simple GET request
-        response = requests.get(f"http://{IP_ADDRESS}:{PORT}/healthcheck")  # Replace with appropriate endpoint if needed
-        
-        response.raise_for_status()  # Raise an exception for non-200 status codes
-        
-        print(f"IP address {IP_ADDRESS} is reachable on port {PORT}")
-    
-    except requests.exceptions.RequestException as e:
-        print(f"Error: Could not connect to {IP_ADDRESS}:{PORT}. {e} \n\nCheck if API is up!")
-        exit(1)
+    # Checking health of server
+    print(f"{PURPLE}Checking health of server ... {RESET}")
+    health_response = make_api_request('GET', 'healthcheck', headers={'accept': 'application/json'})
+    print(f"{GREEN}IP address {IP_ADDRESS} is reachable on port {PORT}{RESET}")
 
     # Execute commands
+    print(f"{PURPLE}Creating rule and config with plugin ...{RESET}")
     plugin_output = execute_command("python3 mspl_mmt_plugin.py " + xml_file)
-    print("\n-> Plugin Output:", plugin_output)
 
     # Upload XML file
+    print(f"{PURPLE}Uploading new rule to mmt-security at {IP_ADDRESS} ... {RESET}")
     xml_file = {'file': open('rules/new_rule.xml', 'rb')}
     xml_response = make_api_request('PUT', 'xml-rule', headers={'accept': 'application/json'}, files=xml_file)
-    print("\n -> XML Upload Response:", xml_response)
 
     # Upload MMT config file
+    print(f"{PURPLE}Uploading new rule to mmt-probe.conf at {IP_ADDRESS} ... {RESET}")
     mmt_file = {'file': open('mmt-confs/new-mmt--probe.conf', 'rb')}
     mmt_response = make_api_request('PUT', 'mmt-config', headers={'accept': 'application/json'}, files=mmt_file)
-    print("\n -> MMT Config Upload Response:", mmt_response)
 
     # Restart Docker
+    print(f"{PURPLE}Restarting docker containers at {IP_ADDRESS} ... {RESET}")
     restart_response = make_api_request('GET', 'restart-docker', headers={'accept': 'application/json'})
-    print("\n -> Docker Restart Response:", restart_response)
