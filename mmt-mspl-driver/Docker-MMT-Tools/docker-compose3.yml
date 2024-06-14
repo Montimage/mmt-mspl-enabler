@@ -3,16 +3,15 @@ version: '3.9'
 services:
   probe:
     container_name: mi_probe
-    image: ghcr.io/montimage/mmt-probe:v1.5.12 #gustavojodar/mspl:test
+    image: gustavojodar/mspl:test
     command: mmt-probe -i ${INTERFACE}
     restart: unless-stopped
     network_mode: host
     volumes:
       - mi_report_storage:/opt/mmt/probe/result/report/online/:rw
+      - ./mongod.conf:/etc/mongo/mongod.conf:ro
     environment:
-      #allow max 100 InitialUEMessage during 1 millisecond
       MMT_SEC_5G_DOS_NGAP_INITIALUEMESSAGE_MS_LIMIT: 100
-      #allow max 80 http2 requests having method == 131 or 130, or type == 8
       MMT_SEC_5G_DOS_HTTP2_MS_LIMIT: 80
 
   mongodb:
@@ -21,13 +20,14 @@ services:
     restart: unless-stopped
     volumes:
       - mi_mongodb_storage:/data/db:rw
+      - ./mongod.conf:/etc/mongo/mongod.conf:ro
     healthcheck:
       test: [ "CMD-SHELL", "mongo" ]
       interval: 10s
       timeout: 1s
       retries: 5
-    networks:
-      - mi_metrics
+    ports:
+      - 27017:27017
 
   operator:
     container_name: mi_operator
@@ -35,17 +35,13 @@ services:
     command: /opt/mmt/operator/bin/www -Xdatabase_server.host=mongodb -Xport_number=8080 -Xprobe_analysis_mode=online
     restart: unless-stopped
     ports:
-      - ${OPERATOR_IP}:${OPERATOR_PORT}:8080/tcp #access to GUI from external via port 3002
-    # wait for mongodb is available
+      - ${OPERATOR_IP}:${OPERATOR_PORT}:8080/tcp
     depends_on:
       mongodb:
         condition: service_healthy
-    # shared volume between mmt-probe and mmt-operator to share CSV reports
     volumes:
       - mi_report_storage:/opt/mmt/probe/result/report/online/:rw
-    networks:
-      - mi_metrics
-
+    
 volumes:
   mi_mongodb_storage:
   mi_report_storage:

@@ -18,7 +18,7 @@ RESET = '\033[0m'
 RED = '\033[91m'
 
 # IP address
-IP_ADDRESS = '10.208.9.122'
+IP_ADDRESS = '10.208.2.116'
 PORT = 4000
 
 # Function to execute a command
