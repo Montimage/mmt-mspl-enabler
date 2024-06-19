@@ -1,18 +1,6 @@
 version: '3.9'
 
 services:
-  probe:
-    container_name: mi_probe
-    image: gustavojodar/mspl:test
-    command: mmt-probe -i ${INTERFACE}
-    restart: unless-stopped
-    network_mode: host
-    volumes:
-      - mi_report_storage:/opt/mmt/probe/result/report/online/:rw
-    environment:
-      MMT_SEC_5G_DOS_NGAP_INITIALUEMESSAGE_MS_LIMIT: 100
-      MMT_SEC_5G_DOS_HTTP2_MS_LIMIT: 80
-
   mongodb:
     container_name: mi_db
     image: mongo:4.4
@@ -20,9 +8,8 @@ services:
     volumes:
       - mi_mongodb_storage:/data/db:rw
       - ./mongod.conf:/etc/mongo/mongod.conf:ro
-    command: ["mongod", "--config", "/etc/mongo/mongod.conf"]
     healthcheck:
-      test: [ "CMD-SHELL", "mongo" ]
+      test: [ "CMD-SHELL", "mongo" , "-c", "/etc/mongo/mongod.conf"]
       interval: 10s
       timeout: 1s
       retries: 5
@@ -32,17 +19,15 @@ services:
   operator:
     container_name: mi_operator
     image: ghcr.io/montimage/mmt-operator:v1.7.6
-    command: /opt/mmt/operator/bin/www -Xdatabase_server.host=mongodb -Xport_number=8080 -Xprobe_analysis_mode=online
+    command: /opt/mmt/operator/bin/www -Xdatabase_server.host=127.0.0.1 -Xdatabase_server.port=27017  -Xport_number=8080 -Xprobe_analysis_mode=online
     restart: unless-stopped
-    ports:
-      - ${OPERATOR_IP}:${OPERATOR_PORT}:8080/tcp
     depends_on:
       mongodb:
         condition: service_healthy
     volumes:
       - mi_report_storage:/opt/mmt/probe/result/report/online/:rw
-    network:
-      - host
+    network_mode: host
+
 volumes:
   mi_mongodb_storage:
   mi_report_storage:

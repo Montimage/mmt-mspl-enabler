@@ -32,16 +32,18 @@ services:
   operator:
     container_name: mi_operator
     image: ghcr.io/montimage/mmt-operator:v1.7.6
-    command: /opt/mmt/operator/bin/www -Xdatabase_server.host=mongodb -Xport_number=8080 -Xprobe_analysis_mode=online
+    command: /opt/mmt/operator/bin/www -Xdatabase_server.host=127.0.0.1 -Xdatabase_server.port=27017  -Xport_number=8080 -Xprobe_analysis_mode=online
     restart: unless-stopped
-    ports:
-      - ${OPERATOR_IP}:${OPERATOR_PORT}:8080/tcp
+    #ports:
+    #  - ${OPERATOR_IP}:${OPERATOR_PORT}:8080/tcp
     depends_on:
       mongodb:
         condition: service_healthy
     volumes:
       - mi_report_storage:/opt/mmt/probe/result/report/online/:rw
-    
+    network_mode: host
+
+
 volumes:
   mi_mongodb_storage:
   mi_report_storage:
