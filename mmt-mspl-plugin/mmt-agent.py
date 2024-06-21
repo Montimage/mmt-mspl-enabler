@@ -18,7 +18,7 @@ RESET = '\033[0m'
 RED = '\033[91m'
 
 # IP address
-IP_ADDRESS = '10.208.5.100'#'10.208.2.116'
+IP_ADDRESS = '10.208.2.116' #'10.208.5.100'
 PORT = 4000
 
 # Function to execute a command
@@ -49,26 +49,37 @@ def make_api_request(method, endpoint, headers=None, files=None):
         sys.exit(1)
 
 if __name__ == "__main__":
-    xml_file = sys.argv[1]
+    
+    xml_file = None
+    if(len(sys.argv) > 1):
+        xml_file = sys.argv[1]
 
     # Checking health of server
     print(f"{PURPLE}Checking health of server ... {RESET}")
     health_response = make_api_request('GET', 'healthcheck', headers={'accept': 'application/json'})
     print(f"{GREEN}IP address {IP_ADDRESS} is reachable on port {PORT}{RESET}")
 
-    # Execute commands
-    print(f"{PURPLE}Creating rule and config with plugin ...{RESET}")
-    plugin_output = execute_command("python3 mspl_mmt_plugin.py " + xml_file)
+    if(xml_file != None):
+        # Execute commands
+        print(f"{PURPLE}Creating rule and config with plugin ...{RESET}")
+        plugin_output = execute_command("python3 mspl_mmt_plugin.py " + xml_file)
 
-    # Upload XML file
-    print(f"{PURPLE}Uploading new rule to mmt-security at {IP_ADDRESS} ... {RESET}")
-    xml_file = {'file': open('rules/new_rule.xml', 'rb')}
-    xml_response = make_api_request('PUT', 'xml-rule', headers={'accept': 'application/json'}, files=xml_file)
+        # Upload XML file
+        print(f"{PURPLE}Uploading new rule to mmt-security at {IP_ADDRESS} ... {RESET}")
+        xml_file = {'file': open('rules/new_rule.xml', 'rb')}
+        xml_response = make_api_request('PUT', 'xml-rule', headers={'accept': 'application/json'}, files=xml_file)
 
-    # Upload MMT config file
-    print(f"{PURPLE}Uploading new rule to mmt-probe.conf at {IP_ADDRESS} ... {RESET}")
-    mmt_file = {'file': open('mmt-confs/new-mmt--probe.conf', 'rb')}
-    mmt_response = make_api_request('PUT', 'mmt-config', headers={'accept': 'application/json'}, files=mmt_file)
+
+        # Upload MMT config file
+        print(f"{PURPLE}Uploading new rule to mmt-probe.conf at {IP_ADDRESS} ... {RESET}")
+        mmt_file = {'file': open('mmt-confs/new-mmt--probe.conf', 'rb')}
+        mmt_response = make_api_request('PUT', 'mmt-config', headers={'accept': 'application/json'}, files=mmt_file)
+
+
+    else:
+        print(f"{PURPLE}New rule not passed -> Uploading default mmt-probe.conf at {IP_ADDRESS} ... {RESET}")
+        mmt_file = {'file': open('mmt-confs/mmt-probe_original.conf', 'rb')}
+        mmt_response = make_api_request('PUT', 'mmt-config', headers={'accept': 'application/json'}, files=mmt_file)
 
     # Restart Docker
     print(f"{PURPLE}Restarting docker containers at {IP_ADDRESS} ... {RESET}")

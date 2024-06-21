@@ -3,8 +3,8 @@ version: '3.9'
 services:
   probe:
     container_name: mi_probe
-    image: gustavojodar/mspl:test
-    command: mmt-probe -i ${INTERFACE}
+    image: gustavojodar/mspl-enabler:probe
+    command: mmt-probe -i ${INTERFACE} -Xprobe-id={PROBE-ID}
     restart: unless-stopped
     network_mode: host
     environment:
