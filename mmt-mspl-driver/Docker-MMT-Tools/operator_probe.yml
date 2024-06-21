@@ -1,16 +1,6 @@
 version: '3.9'
 
 services:
-  probe:
-    container_name: mi_probe
-    image: gustavojodar/mspl-enabler:probe
-    command: mmt-probe -i ${INTERFACE} -Xprobe-id={PROBE-ID}
-    restart: unless-stopped
-    network_mode: host
-    environment:
-      MMT_SEC_5G_DOS_NGAP_INITIALUEMESSAGE_MS_LIMIT: 100
-      MMT_SEC_5G_DOS_HTTP2_MS_LIMIT: 80  
-  
   mongodb:
     container_name: mi_db
     image: mongo:4.4
@@ -27,16 +17,35 @@ services:
 
   operator:
     container_name: mi_operator
-    image: ghcr.io/montimage/mmt-operator:v1.7.6
+    image: gustavojodar/mspl-enabler:operator
     command: /opt/mmt/operator/bin/www -Xinput_mode=socket -Xsocket_input.max_connections=3 -Xsocket_input.host=${OPERATOR_IP} -Xdatabase_server.host=127.0.0.1 -Xdatabase_server.port=27017  -Xport_number=${OPERATOR_PORT} -Xprobe_analysis_mode=online 
     restart: unless-stopped
     depends_on:
       mongodb:
         condition: service_healthy
+    healthcheck:
+        test: ["CMD", "curl", "-f", "http://${OPERATOR_IP}:${OPERATOR_PORT}"]
+        interval: 20s
+        timeout: 10s
+        retries: 5
     volumes:
       - mi_report_storage:/opt/mmt/probe/result/report/online/:rw
     network_mode: host
   
+  probe:
+    container_name: mi_probe
+    image: gustavojodar/mspl-enabler:probe
+    command: mmt-probe -i ${INTERFACE} -Xprobe-id=${PROBEID}
+    restart: unless-stopped
+    network_mode: host
+    depends_on:
+      operator:
+        condition: service_healthy
+    environment:
+      MMT_SEC_5G_DOS_NGAP_INITIALUEMESSAGE_MS_LIMIT: 100
+      MMT_SEC_5G_DOS_HTTP2_MS_LIMIT: 80  
+
+
 volumes:
   mi_mongodb_storage:
   mi_report_storage:

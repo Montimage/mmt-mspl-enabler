@@ -4,7 +4,7 @@ services:
   probe:
     container_name: mi_probe
     image: gustavojodar/mspl-enabler:probe
-    command: mmt-probe -i ${INTERFACE} -Xprobe-id={PROBE-ID}
+    command: mmt-probe -i ${INTERFACE} -Xprobe-id=${PROBE-ID}
     restart: unless-stopped
     network_mode: host
     environment:
