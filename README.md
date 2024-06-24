@@ -13,4 +13,4 @@ After genrated, those files can be sent to the server running the mmt-tools by u
 
 # mmt-tools
 
-To set up the MMT-Tools check: [Docker-MMT-Tools](https://swagger.io/](https://github.com/Montimage/mmt-mspl-enabler/tree/main/mmt-mspl-driver/Docker-MMT-Tools)
+To set up the MMT-Tools check: [Docker-MMT-Tools](https://github.com/Montimage/mmt-mspl-enabler/tree/main/mmt-mspl-driver/Docker-MMT-Tools)
