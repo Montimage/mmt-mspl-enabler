@@ -11,6 +11,6 @@ By passing a MSPL Policy File to the mmt-mspl-plugin you will generate two files
 
 After genrated, those files can be sent to the server running the mmt-tools by using the mmt-mspl-drive, it exposes and API documented by [Swagger](https://swagger.io/).
 
-# mmt-tools
+# MMT-Tools
 
 To set up the MMT-Tools check: [Docker-MMT-Tools](https://github.com/Montimage/mmt-mspl-enabler/tree/main/mmt-mspl-driver/Docker-MMT-Tools)
