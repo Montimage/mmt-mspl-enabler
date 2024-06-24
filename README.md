@@ -10,3 +10,7 @@ By passing a MSPL Policy File to the mmt-mspl-plugin you will generate two files
 * a mmt-probe.conf that applies only the new rule to be used by MMT-Security
 
 After genrated, those files can be sent to the server running the mmt-tools by using the mmt-mspl-drive, it exposes and API documented by [Swagger](https://swagger.io/).
+
+# mmt-tools
+
+To set up the MMT-Tools check: [Docker-MMT-Tools]([https://swagger.io/](https://github.com/Montimage/mmt-mspl-enabler/tree/main/mmt-mspl-driver/Docker-MMT-Tools))
