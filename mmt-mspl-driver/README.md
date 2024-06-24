@@ -23,6 +23,13 @@ Start the server (must be done with sudo)
   sudo node index.js
 ```
 
+# Run using Docker
+```bash
+sudo docker pull gustavojodar/mspl-enabler:mspl-driver
+
+sudo docker run --name mspl-driver-container -p 4000:4000 --rm gustavojodar/mspl-enabler:mspl-driver
+```
+
 # Requirements
  - Python 3
  - Node v12.22.9
