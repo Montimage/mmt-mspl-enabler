@@ -15,10 +15,10 @@ Go to the project directory
 To generate a new mmt-security rule and a mmt-probe.conf 
 
 ```bash
-  python3 mspl_mmt_plugin.py <path/to/mspl_file.xml>
+python3 mmt-mspl-plugin [-r <path/to/mspl_file.xml>] [-s <server_ip>] [-p <port>]
 ```
 
-Example pingofthedeath.xml input
+Example pingofthedeath.xml input using default IP and defalut PORT (writen in the file program) 
 
 ```bash
   python3 mspl_mmt_plugin.py inputs/pingofthedeath.xml 
