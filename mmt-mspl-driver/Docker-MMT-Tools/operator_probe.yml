@@ -35,7 +35,7 @@ services:
   probe:
     container_name: mi_probe
     image: gustavojodar/mspl-enabler:probe
-    command: mmt-probe -i ${INTERFACE} -Xprobe-id=${PROBEID}
+    command: mmt-probe -i ${INTERFACE} -Xprobe-id=${PROBEID} -Xsocket-output.hostname=${OPERATOR_IP}
     restart: unless-stopped
     network_mode: host
     depends_on:
