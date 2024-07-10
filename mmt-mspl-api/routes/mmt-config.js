@@ -12,7 +12,7 @@ router.put('/', function (req, res, next) {
     const fileContent = req.body.fileContent;
 
     // Define the file path
-    const filePath = path.join(__dirname, 'uploads', 'mmt-probe.conf');
+    const filePath = path.join(__dirname, '../uploads', 'mmt-probe.conf');
 
     // Write the file content to mmt-probe.conf
     fs.writeFile(filePath, fileContent, 'utf8', (err) => {
