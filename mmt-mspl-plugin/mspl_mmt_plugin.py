@@ -140,25 +140,45 @@ class RuleMaker:
                 # Write the modified XML as a new rule
                 rule_source_object.write("rules/new_rule.xml")
 
-            
+class Plugin:
+    def generate_configuration(self, xml_file):
+        print("  -> Reading mspl file...")
+        xml_source = open(xml_file).read()
+
+        msplHelper = Mspl()
+        configAdapter = ConfigAdapter()
+        ruleMaker = RuleMaker()
+
+        rules = msplHelper.getConfig(xml_source)
+
+        print(f"  -> Obtained info: {rules}")
+        ruleMaker.create_rule(rules)
+
+        # Example usage:
+        config_changes = {
+            'rules-mask': f"\"(1:{NEW_RULE_NUMBER})\""
+        }   
+
+        configAdapter.modify_config_file('mmt-probe.conf', config_changes)
+
+        configs = ["", ""]
+        with open(MMT_PROBE_CONF_PATH + "new-mmt--probe.conf", "r", encoding='utf-8') as new_conf_file:
+            configs[0] = str(new_conf_file.read())
+
+        
+        with open("rules/new_rule.xml", "r", encoding='utf-8') as new_rule_file:
+            configs[1] = str(new_rule_file.read())
+
+        return configs
+        
+'''
 if __name__ == "__main__":
     xml_file = sys.argv[1] 
+
+    plugin = Plugin()
+
+    configs = plugin.generate_conf(xml_file)    
     
-    print("  -> Reading mspl file...")
-    xml_source = open(xml_file).read()
-
-    msplHelper = Mspl()
-    configAdapter = ConfigAdapter()
-    ruleMaker = RuleMaker()
-
-    rules = msplHelper.getConfig(xml_source)
-
-    print(f"  -> Obtained info: {rules}")
-    ruleMaker.create_rule(rules)
-
-    # Example usage:
-    config_changes = {
-        'rules-mask': f"\"(1:{NEW_RULE_NUMBER})\""
-    }   
-
-    configAdapter.modify_config_file('mmt-probe.conf', config_changes)
+    print(configs[0])
+    print(type(configs[0]))
+'''
