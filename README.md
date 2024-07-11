@@ -1,6 +1,6 @@
 # mmt-mspl-enabler
 
-This project develops a plugin and a Driver to conect an MSPL Policy agent and the mmt-tools installed in a server, making it possible to use .xml policy files to generate new security rules to be used by the MMT-Tools.
+This project develops a plugin, a Driver and an API to conect a MSPL Policy agent and the mmt-tools installed in a server, making it possible to use .xml policy files to generate new security rules to be used by the MMT-Tools.
 
 Here is an overview of how this project works:
 <img src="imgs/Cerberus-MMT%20Doc.jpg"/>
