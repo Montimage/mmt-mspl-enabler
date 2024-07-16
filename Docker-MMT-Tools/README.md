@@ -2,7 +2,7 @@
 
 For easily setting up multiple MMT-Probes using the same MMT-Operator the docker compose files only_probe.yml and operator_probe.yml were created.
 
-<img src="../../imgs/MultiProbes.jpg"/>
+<img src="../imgs/MultiProbes.jpg"/>
 
 For Server 0 (The one that will host MMT-Operator and a MMT-Probe), run the following command:
 Setting up the .env file to have the IP of Server 0 and the desired PORT for MMT-Operator.
