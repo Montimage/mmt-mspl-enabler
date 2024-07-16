@@ -17,7 +17,7 @@ services:
 
   operator:
     container_name: mi_operator
-    image: gustavojodar/mspl-enabler:operator
+    image: montimage/cerberus-mspl-enabler:operator
     command: /opt/mmt/operator/bin/www -Xinput_mode=socket -Xsocket_input.max_connections=3 -Xsocket_input.host=${OPERATOR_IP} -Xdatabase_server.host=127.0.0.1 -Xdatabase_server.port=27017  -Xport_number=${OPERATOR_PORT} -Xprobe_analysis_mode=online 
     restart: unless-stopped
     depends_on:
@@ -34,7 +34,7 @@ services:
 
   probe:
     container_name: mi_probe
-    image: gustavojodar/mspl-enabler:probe
+    image: montimage/cerberus-mspl-enabler:probe
     command: mmt-probe -i ${INTERFACE} -Xprobe-id=${PROBEID} -Xsocket-output.hostname=${OPERATOR_IP}
     restart: unless-stopped
     network_mode: host
@@ -47,7 +47,7 @@ services:
 
   api:
     container_name: mi_api
-    image: gustavojodar/mspl-enabler:api
+    image: montimage/cerberus-mspl-enabler:api
     command: ./start_api.sh
     restart: unless-stopped
     ports:
