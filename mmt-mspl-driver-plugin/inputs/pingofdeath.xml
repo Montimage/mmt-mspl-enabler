@@ -25,7 +25,7 @@
                             <DestinationAddress>8.8.8.8</DestinationAddress>
                             <packetSize> <!-->Opcional</!-->
                             	<operator>greater</operator>
-                            	<bytes>300</bytes>
+                            	<bytes>350</bytes>
                             </packetSize>
                             <ProtocolType>1</ProtocolType> <!-->1</!-->
                             <ICMPCondition> <!-->Opcional</!-->

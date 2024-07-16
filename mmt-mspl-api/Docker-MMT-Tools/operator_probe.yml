@@ -31,7 +31,7 @@ services:
     volumes:
       - mi_report_storage:/opt/mmt/probe/result/report/online/:rw
     network_mode: host
-  
+
   probe:
     container_name: mi_probe
     image: gustavojodar/mspl-enabler:probe
@@ -45,6 +45,20 @@ services:
       MMT_SEC_5G_DOS_NGAP_INITIALUEMESSAGE_MS_LIMIT: 100
       MMT_SEC_5G_DOS_HTTP2_MS_LIMIT: 80  
 
+  api:
+    container_name: mi_api
+    image: gustavojodar/mspl-enabler:api
+    command: ./start_api.sh
+    restart: unless-stopped
+    ports:
+      - 4000:4000
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+    depends_on:
+      mongodb:
+        condition: service_healthy
+      operator:
+        condition: service_healthy
 
 volumes:
   mi_mongodb_storage:
