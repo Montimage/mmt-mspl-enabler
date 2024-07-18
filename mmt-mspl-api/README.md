@@ -1,4 +1,4 @@
-# About mmt-mspl-driver
+# About mmt-mspl-API
 This code exposes an API using NodeJs and npm to receive new mmt-probe.conf files and mmt-security rules to be applied in a running server. This code also has a Swagger descriptor at http://[IP]:3000/api-docs .
 
 <img src="../imgs/swagger.png"/>
