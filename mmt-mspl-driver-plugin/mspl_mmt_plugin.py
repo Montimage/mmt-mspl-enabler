@@ -140,7 +140,7 @@ class RuleMaker:
                 # Write the modified XML as a new rule
                 rule_source_object.write("rules/new_rule.xml")
 
-class Plugin:
+class M2LPlugin:
     def get_configuration(self, xml_file):
         print("  -> Reading mspl file...")
         xml_source = open(xml_file).read()
@@ -174,7 +174,7 @@ class Plugin:
 if __name__ == "__main__":
     xml_file = sys.argv[1] 
 
-    plugin = Plugin()
+    plugin = M2LPlugin()
 
     configs = plugin.get_configuration(xml_file)    
     

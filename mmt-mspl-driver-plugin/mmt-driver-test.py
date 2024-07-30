@@ -132,7 +132,7 @@ if __name__ == "__main__":
     }
 
     
-    plugin = Plugin()
+    plugin = M2LPlugin()
 
     enabler_configuration = plugin.get_configuration(xml_file)    
     
