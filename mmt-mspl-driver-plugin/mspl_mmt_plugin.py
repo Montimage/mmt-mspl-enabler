@@ -60,7 +60,7 @@ class Mspl:
         return action_type != None
 
     # return the configuration from the mspl source
-    def getConfig(self, mspl_source):
+    def get_configuration(self, mspl_source):
         
         rules = []
         namespace = 'http://modeliosoft/xsddesigner/a22bd60b-ee3d-425c-8618-beb6a854051a/ITResource.xsd'
@@ -141,7 +141,7 @@ class RuleMaker:
                 rule_source_object.write("rules/new_rule.xml")
 
 class Plugin:
-    def generate_configuration(self, xml_file):
+    def get_configuration(self, xml_file):
         print("  -> Reading mspl file...")
         xml_source = open(xml_file).read()
 
@@ -149,7 +149,7 @@ class Plugin:
         configAdapter = ConfigAdapter()
         ruleMaker = RuleMaker()
 
-        rules = msplHelper.getConfig(xml_source)
+        rules = msplHelper.get_configuration(xml_source)
 
         print(f"  -> Obtained info: {rules}")
         ruleMaker.create_rule(rules)
@@ -176,7 +176,7 @@ if __name__ == "__main__":
 
     plugin = Plugin()
 
-    configs = plugin.generate_configuration(xml_file)    
+    configs = plugin.get_configuration(xml_file)    
     
     print(configs[0])
     print(type(configs[0]))

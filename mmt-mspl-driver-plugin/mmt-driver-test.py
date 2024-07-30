@@ -4,6 +4,8 @@ import requests
 import sys
 import os
 
+from mspl_mmt_plugin import *
+
 __author__ = "Gustavo Jodar Soares"
 __copyright__ = "Copyright 2023, CERBERUS"
 __credits__ = ["Antonio Skarmeta", "Alejandro Molina Zarca", "Gustavo jodar Soares", "Huu-Nghia Nguyen", "Emilio García de la Calera Molina"]
@@ -115,3 +117,25 @@ class MMTDriver:
         restart_response = self.make_api_request('GET', 'restart-docker', self.IP_ADDRESS, self.PORT, headers={'accept': 'application/json'})
         
 
+
+if __name__ == "__main__":
+    parser = argparse.ArgumentParser(description='MMT MSPL Plugin')
+    parser.add_argument('-r', '--rule', type=str, help='Path to the XML rule file')
+    args = parser.parse_args()
+
+    xml_file = args.rule if args.rule else None
+
+    end_point_info = {
+            "host" : '10.208.89.15',
+            "port" : '4000',
+            "api" : "10.208.89.15:4000",
+    }
+
+    
+    plugin = Plugin()
+
+    enabler_configuration = plugin.get_configuration(xml_file)    
+    
+    mmtDriver = MMTDriver(end_point_info)
+
+    mmtDriver.enforce_conf(enabler_configuration)
