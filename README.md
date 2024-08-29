@@ -27,9 +27,9 @@ python3 mmt-agent.py -r inputs/pingofdeath.xml
 ```
 ***Expected Results:***
 
-<img>
+<img src="imgs/pingofdeath.jpeg"/>
 
-<img>
+<img src="imgs/pingofdeath_scr.jpeg"/>
 
 ```bash
 cd mmt-mspl-driver-plugin/
