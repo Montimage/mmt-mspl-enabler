@@ -3,6 +3,10 @@
 
 The mmt-mspl-enabler is a project designed to connect an mspl file to Montimage's mmt-tools. 
 
+## Connecting to Bastion
+
+For connecting to Bastion, refer the /Docker-MMT-Tools.README.md and use the file mmt-driver.py located in this folder
+
 ## Run Locally
 
 Go to the project directory
