@@ -38,4 +38,4 @@ python3 mmt-agent.py -r inputs/snort_policy_nmapsyn.xml
 ```
 ***Expected Results:***
 
-<img src="imgs/scan_result.jpeg">
+<img src="imgs/scan_result.png">
