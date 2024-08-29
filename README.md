@@ -14,3 +14,29 @@ After genrated, those files can be sent to the server running the mmt-tools by u
 # MMT-Tools
 
 To set up the MMT-Tools check: [Docker-MMT-Tools](https://github.com/Montimage/mmt-mspl-enabler/tree/main/mmt-mspl-driver/Docker-MMT-Tools)
+
+# Running Tests
+
+To run tests, run the following command
+
+```bash
+cd mmt-mspl-driver-plugin/
+
+python3 mmt-agent.py -r inputs/pingofdeath.xml
+
+```
+***Expected Results:***
+
+<img>
+
+<img>
+
+```bash
+cd mmt-mspl-driver-plugin/
+
+python3 mmt-agent.py -r inputs/snort_policy_nmapsyn.xml
+
+```
+***Expected Results:***
+
+<img>
