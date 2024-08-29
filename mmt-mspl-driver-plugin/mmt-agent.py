@@ -121,16 +121,17 @@ class MMTDriver:
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description='MMT MSPL Plugin')
     parser.add_argument('-r', '--rule', type=str, help='Path to the XML rule file')
+    parser.add_argument('--host', type=str, default='10.208.89.15', help='IP address of the endpoint')
+    parser.add_argument('--port', type=str, default='4000', help='Port number of the endpoint')
     args = parser.parse_args()
 
     xml_file = args.rule if args.rule else None
 
     end_point_info = {
-            "host" : '10.208.89.15',
-            "port" : '4000',
-            "api" : "10.208.89.15:4000",
+            "host" : args.host,
+            "port" : args.port,
+            "api" : f"{args.host}:{args.port}",
     }
-
     
     plugin = M2LPlugin()
 
