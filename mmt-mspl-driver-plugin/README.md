@@ -35,9 +35,9 @@ Example - Using mmt-agent.py to configure the mmt-tools to use the policies espe
 ```
 **Parameters for mmt-agent.py**
 
-* '-r',  --rule' -> Defines the rule.xml file to be sent to the mspl-enabler
-*       --host' -> Defines the HOST's IP address of the API
-*       --port' -> Defines the HOST's PORT address of the API
+* -r, --rule -> Defines the rule.xml file to be sent to the mspl-enabler
+* --host -> Defines the HOST's IP address of the API
+* --port -> Defines the HOST's PORT address of the API
 
 # Requires
  - Python 3
