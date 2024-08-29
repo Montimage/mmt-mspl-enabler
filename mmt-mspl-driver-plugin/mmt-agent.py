@@ -23,7 +23,7 @@ RED = '\033[91m'
 
 # Default IP address and port
 DEFAULT_IP_ADDRESS = '10.208.5.100'
-DEFAULT_PORT = 4000
+DEFAULT_PORT = '4000'
 
 class MMTDriver:
 
@@ -121,8 +121,8 @@ class MMTDriver:
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description='MMT MSPL Plugin')
     parser.add_argument('-r', '--rule', type=str, help='Path to the XML rule file')
-    parser.add_argument('--host', type=str, default='10.208.89.15', help='IP address of the endpoint')
-    parser.add_argument('--port', type=str, default='4000', help='Port number of the endpoint')
+    parser.add_argument('--host', type=str, default=DEFAULT_IP_ADDRESS, help='IP address of the endpoint')
+    parser.add_argument('--port', type=str, default=DEFAULT_PORT, help='Port number of the endpoint')
     args = parser.parse_args()
 
     xml_file = args.rule if args.rule else None
