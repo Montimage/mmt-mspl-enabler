@@ -26,10 +26,9 @@ python3 mmt-agent.py -r inputs/pingofdeath.xml
 
 ```
 ***Expected Results:***
+<img src="imgs/pingofdeath_scr.png"/>
 
 <img src="imgs/pingofdeath.jpeg"/>
-
-<img src="imgs/pingofdeath_scr.jpeg"/>
 
 ```bash
 cd mmt-mspl-driver-plugin/
@@ -39,4 +38,4 @@ python3 mmt-agent.py -r inputs/snort_policy_nmapsyn.xml
 ```
 ***Expected Results:***
 
-<img>
+<img src="imgs/scan_result.jpeg">
