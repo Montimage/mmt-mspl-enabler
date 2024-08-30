@@ -30,13 +30,15 @@ python3 mmt-agent.py -r inputs/pingofdeath.xml
 **Img 1**: Screenshot of mmt.agent.py output when applied the pingofdeath.xml, a MSPL Policy to apply a rule for ping of death attack detection.
 
 <img src="imgs/pingofdeath.jpeg"/>
-**Img 2**: Screenshot of MMT Operator UI Security tab after applying the generated rule (ping of death attack) and sending a ping with size greater than 350 bytes (command: ping -s 400). 
+**Img 2**: Screenshot of MMT Operator UI Security tab after applying the generated rule (ping of death attack) and sending a ping with size greater than 350 bytes (command: ping -s 400).
+
 ```bash
 cd mmt-mspl-driver-plugin/
 
 python3 mmt-agent.py -r inputs/snort_policy_nmapsyn.xml
 
 ```
+
 ***Expected Results:***
 
 <img src="imgs/scan_result.png">
