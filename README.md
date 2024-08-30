@@ -27,9 +27,11 @@ python3 mmt-agent.py -r inputs/pingofdeath.xml
 ```
 ***Expected Results:***
 <img src="imgs/pingofdeath_scr.png"/>
+
 **Img 1**: Screenshot of mmt.agent.py output when applied the pingofdeath.xml, a MSPL Policy to apply a rule for ping of death attack detection.
 
 <img src="imgs/pingofdeath.jpeg"/>
+
 **Img 2**: Screenshot of MMT Operator UI Security tab after applying the generated rule (ping of death attack) and sending a ping with size greater than 350 bytes (command: ping -s 400).
 
 ```bash
@@ -40,12 +42,13 @@ python3 mmt-agent.py -r inputs/snort_policy_nmapsyn.xml
 ```
 
 ***Expected Results:***
-
 <img src="imgs/scan_result.png">
+
 **Img 3**: Screenshot of mmt.agent.py output when applied the snort_policy_nmapsyn.xml, a MSPL Policy to apply a rule to detect TCP SYN Scans.
  
 
 <img src="imgs/TCP_SYN_Scan.png">
+
 **Img 4**: Screenshot of MMT Operator UI Security tab after applying the generated rule (TCP SYN Scan) and starting a scan on the target machine (command: sudo nmap 10.208.89.15). 
  
 
