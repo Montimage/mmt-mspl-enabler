@@ -14,8 +14,9 @@ Run the following command:
   sudo docker compose -f operator_probe.yml -d
 ```
 
-Server 1: will host only a MMT-Probe.
-Server 2: will host only a MMT-Probe.
+* Server 1: will host only a MMT-Probe.
+* Server 2: will host only a MMT-Probe.
+
 For those servers, set the .env file using the OPERATOR_IP = Server 0's IP (as it will receive the data) and the MMT-Operator's PORT. Also, don't forget to change the PROBE_ID (a different one for each server) so it is possible to see their output in MMT-Operator. 
 
 For setting up the other servers (with only MMT-Probe), run:
